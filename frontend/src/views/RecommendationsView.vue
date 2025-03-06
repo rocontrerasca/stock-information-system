@@ -50,7 +50,7 @@
   import { storeToRefs } from 'pinia'
   
   const stockStore = useStockStore();
-  const { recommendations, error } = storeToRefs(stockStore);
+  const { recommendations, error, loading } = storeToRefs(stockStore);
   
   onMounted(() => stockStore.fetchRecommendations());
   
