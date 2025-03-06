@@ -86,6 +86,9 @@ Este proyecto es un sistema para obtener, almacenar y mostrar información de ac
      API_URL=https://8j5baasof2.execute-api.us-west-2.amazonaws.com/production/swechallenge/list
      API_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdHRlbXB0cyI6MjUsImVtYWlsIjoicm9jb250cmVyYXNjYUBnbWFpbC5jb20iLCJleHAiOjE3NDExODkyNDksImlkIjoiMCIsInBhc3N3b3JkIjoiJyBPUiAnMScgPSAnMSJ9.WGkPJNZ-P8V5pzaZS0I6aLrw-SB5xc2BQViouriHgdA
      
+     # CORS
+     CORS_ORIGIN=http://localhost:5173
+     CORS_METHODS=GET,PUT,POST,DELETE
 
 3. *Instalar godotenv*:
    - Ejecuta el siguiente comando para instalar el paquete godotenv:
