@@ -1,6 +1,9 @@
 package models
 
-import "time"
+import (
+	"errors"
+	"time"
+)
 
 type Stock struct {
 	Ticker     string    `json:"ticker"`
@@ -12,4 +15,11 @@ type Stock struct {
 	RatingFrom string    `json:"rating_from"`
 	RatingTo   string    `json:"rating_to"`
 	Time       time.Time `json:"time"`
+}
+
+func (s *Stock) Validate() error {
+	if s.Ticker == "" || s.Company == "" || s.Action == "" {
+		return errors.New("ticker, company, and action fields cannot be empty")
+	}
+	return nil
 }

@@ -12,23 +12,22 @@ import (
 
 var DB *sql.DB
 
-func Init() {
-	// Cargar variables de entorno desde el archivo .env
+func Init() error {
 	if err := godotenv.Load(); err != nil {
-		log.Fatalf("Error loading .env file: %v", err)
+		log.Println("Warning: Error loading .env file:", err)
 	}
 
-	// Obtener variables de entorno
 	dbURL := os.Getenv("DB_URL")
 	var err error
 	DB, err = sql.Open("pgx", dbURL)
 	if err != nil {
-		log.Fatalf("Error connecting to database: %v", err)
+		return fmt.Errorf("error connecting to database: %w", err)
 	}
 
 	if err = DB.Ping(); err != nil {
-		log.Fatalf("Error pinging database: %v", err)
+		return fmt.Errorf("error pinging database: %w", err)
 	}
 
-	fmt.Println("Connected to the database!")
+	log.Println("Database connected successfully")
+	return nil
 }

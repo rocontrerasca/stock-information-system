@@ -3,6 +3,7 @@ package repositories
 import (
 	"backend/models"
 	"database/sql"
+	"fmt"
 	"sort"
 	"strconv"
 	"strings"
@@ -18,18 +19,25 @@ func NewStockRepository(db *sql.DB) *StockRepository {
 }
 
 func (r *StockRepository) SaveStocks(stocks []models.Stock) error {
-	for _, stock := range stocks {
-		_, err := r.DB.Exec(`
-			INSERT INTO stock_data (ticker, target_from, target_to, company, action, brokerage, rating_from, rating_to, time)
-			VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-			ON CONFLICT (ticker) DO NOTHING`,
-			stock.Ticker, stock.TargetFrom, stock.TargetTo, stock.Company, stock.Action, stock.Brokerage, stock.RatingFrom, stock.RatingTo, stock.Time,
-		)
-		if err != nil {
-			return err
-		}
+	if len(stocks) == 0 {
+		return nil
 	}
-	return nil
+
+	query := "INSERT INTO stock_data (ticker, target_from, target_to, company, action, brokerage, rating_from, rating_to, time) VALUES "
+	values := []interface{}{}
+	placeholders := []string{}
+
+	for i, stock := range stocks {
+		start := i*9 + 1
+		ph := fmt.Sprintf("($%d, $%d, $%d, $%d, $%d, $%d, $%d, $%d, $%d)",
+			start, start+1, start+2, start+3, start+4, start+5, start+6, start+7, start+8)
+		placeholders = append(placeholders, ph)
+		values = append(values, stock.Ticker, stock.TargetFrom, stock.TargetTo, stock.Company, stock.Action, stock.Brokerage, stock.RatingFrom, stock.RatingTo, stock.Time)
+	}
+
+	query += strings.Join(placeholders, ",")
+	_, err := r.DB.Exec(query, values...)
+	return err
 }
 
 func (r *StockRepository) GetAllStocks() ([]models.Stock, error) {
