@@ -72,8 +72,7 @@ Este proyecto es un sistema para obtener, almacenar y mostrar información de ac
          rating_from STRING,
          rating_to STRING,
          time TIMESTAMP
-     );
-     
+     );     
 
 2. *Archivo .env*:
    - En la raíz del proyecto backend, crea un archivo .env con el siguiente contenido:
