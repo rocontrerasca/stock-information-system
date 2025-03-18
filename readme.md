@@ -1,7 +1,6 @@
 # *Stock Information System*
 
 Este proyecto es un sistema para obtener, almacenar y mostrar información de acciones (stocks) desde una API externa. El sistema consta de un backend en *Golang* y un frontend en *Vue 3* con *TypeScript, **Pinia* y *Tailwind CSS. Los datos se almacenan en una base de datos **CockroachDB*.
-
 ---
 
 ## *Tabla de Contenidos*
